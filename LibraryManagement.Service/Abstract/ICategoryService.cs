@@ -11,6 +11,6 @@ namespace LibraryManagement.Service.Abstract
     {
         List<CategoryModel> GetAllCategories();
 
-        bool SaveCategory(CategoryModel category);
+        int SaveCategory(CategoryModel category);
     }
 }

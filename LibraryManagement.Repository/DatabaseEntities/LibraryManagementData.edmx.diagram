@@ -7,16 +7,16 @@
       <Diagram DiagramId="45ede8447b2b4ff8aec202ecdbc0689b" Name="Diagram1">
         <EntityTypeShape EntityType="LibraryManagementModel.Author" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="LibraryManagementModel.BookIssue" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="LibraryManagementModel.Book" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="LibraryManagementModel.Category" Width="1.5" PointX="0.75" PointY="9.5" IsExpanded="true" />
         <EntityTypeShape EntityType="LibraryManagementModel.UserRole" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
         <EntityTypeShape EntityType="LibraryManagementModel.User" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <AssociationConnector Association="LibraryManagementModel.FK_Books_Authors" ManuallyRouted="false" />
-        <AssociationConnector Association="LibraryManagementModel.FK_BookIssues_Books" ManuallyRouted="false" />
         <AssociationConnector Association="LibraryManagementModel.FK_BookIssues_Users" ManuallyRouted="false" />
         <AssociationConnector Association="LibraryManagementModel.FK_BookIssues_Users1" ManuallyRouted="false" />
-        <AssociationConnector Association="LibraryManagementModel.FK_Books_Categories" ManuallyRouted="false" />
         <AssociationConnector Association="LibraryManagementModel.FK_Users_UserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="LibraryManagementModel.Book" Width="1.5" PointX="3" PointY="7.375" />
+        <AssociationConnector Association="LibraryManagementModel.FK_Books_Authors" />
+        <AssociationConnector Association="LibraryManagementModel.FK_BookIssues_Books" />
+        <AssociationConnector Association="LibraryManagementModel.FK_Books_Categories" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

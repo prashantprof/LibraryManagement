@@ -14,6 +14,9 @@ namespace LibraryManagement.Tests.Services
         {
             categoryService = new CategoryService();
         }
+
+
+
         [TestMethod]
         public void SaveCategoryTest()
         {
@@ -25,9 +28,9 @@ namespace LibraryManagement.Tests.Services
             };
 
             //Act
-            bool result = categoryService.SaveCategory(category);
+            var result = categoryService.SaveCategory(category);
             //Assert
-            Assert.AreNotEqual(false, result);
+            Assert.AreNotEqual(0, result);
         }
     }
 }

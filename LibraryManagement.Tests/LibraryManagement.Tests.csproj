@@ -125,6 +125,7 @@
     <Compile Include="Repositories\AuthorTest.cs" />
     <Compile Include="Services\AuthorTest.cs" />
     <Compile Include="Services\CategoryTest.cs" />
+    <Compile Include="Services\BookTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />

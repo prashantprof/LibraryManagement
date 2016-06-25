@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibraryManagement.Service.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,8 @@ namespace LibraryManagement.Service.Abstract
 {
     public interface IBookService
     {
+        List<BookModel> GetAllBooks();
 
+        List<BookModel> SaveNewBook(BookModel newBook);
     }
 }

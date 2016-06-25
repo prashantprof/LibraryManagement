@@ -13,7 +13,7 @@ namespace LibraryManagement.Service.Abstract
 
         List<AuthorModel> GetAuthors();
 
-        bool SaveAuthor(AuthorModel newAuthor);
+        int SaveAuthor(AuthorModel newAuthor);
 
         bool DeleteAuthor(int id);
     }

@@ -21,7 +21,7 @@ namespace LibraryManagement.Repository.DatabaseEntities
     
         public int BookID { get; set; }
         public string BookName { get; set; }
-        public byte[] ShortDescription { get; set; }
+        public string ShortDescription { get; set; }
         public string LongDescription { get; set; }
         public int AutherID { get; set; }
         public int CategoryID { get; set; }

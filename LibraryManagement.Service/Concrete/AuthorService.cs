@@ -79,7 +79,7 @@ namespace LibraryManagement.Service.Concrete
         }
 
 
-        public bool SaveAuthor(AuthorModel newAuthor)
+        public int SaveAuthor(AuthorModel newAuthor)
         {
             if (newAuthor != null)
             {
@@ -91,7 +91,8 @@ namespace LibraryManagement.Service.Concrete
                         author.FirstName = newAuthor.FirstName;
                         author.LastName = newAuthor.LastName;
                         author.AboutAuthor = newAuthor.AboutAuthor;
-                        return authorReporitory.UpdateAuthor(author);
+                        authorReporitory.UpdateAuthor(author);
+                        return author.AuthorID;
                     }
                 }
                 else
@@ -102,14 +103,10 @@ namespace LibraryManagement.Service.Concrete
                         LastName = newAuthor.LastName,
                         AboutAuthor = newAuthor.AboutAuthor
                     };
-                    int id = authorReporitory.AddAuthor(author);
-                    if (id > 0)
-                        return true;
-                    else
-                        return false;
+                    return authorReporitory.AddAuthor(author);
                 }
             }
-            return false;
+            return 0;
         }
 
         public bool DeleteAuthor(int id)

@@ -40,7 +40,7 @@ namespace LibraryManagement.Service.Concrete
             }
         }
 
-        public bool SaveCategory(CategoryModel category)
+        public int SaveCategory(CategoryModel category)
         {
             try
             {
@@ -52,7 +52,8 @@ namespace LibraryManagement.Service.Concrete
                         if (extCategory != null)
                         {
                             extCategory.CategoryName = category.CategoryName;
-                            return categoryRepository.UpdateCategory(extCategory);
+                            categoryRepository.UpdateCategory(extCategory);
+                            return extCategory.CategoryID;
                         }
                     }
                     else
@@ -61,18 +62,13 @@ namespace LibraryManagement.Service.Concrete
                         {
                             CategoryName = category.CategoryName
                         };
-                        int id = categoryRepository.AddCategory(newCategory);
-                        if (id > 0)
-                            return true;
-                        else
-                            return false;
+                        return categoryRepository.AddCategory(newCategory);
                     }
                 }
-                return false;
+                return 0;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
