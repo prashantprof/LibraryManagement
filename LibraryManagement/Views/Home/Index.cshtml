@@ -1,6 +1,5 @@
-﻿@{
-    ViewBag.Title = "Book List";
-}
+﻿@model IEnumerable<LibraryManagement.Service.Models.BookModel>
+
 @section featured {
     <section class="featured">
         <div class="content-wrapper">
@@ -11,5 +10,56 @@
     </section>
 }
 <div>
+    <p>
+        @Html.ActionLink("Add New Book", "AddBook", "Home")
+    </p>
+    <table>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BookName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShortDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AutherID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShortDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AuthorDetails.FirstName)
+                    @Html.DisplayFor(modelItem => item.AuthorDetails.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryDetails.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+
+    </table>
 
 </div>

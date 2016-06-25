@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibraryManagement.Service.Concrete;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,11 +9,17 @@ namespace LibraryManagement.Controllers
 {
     public class HomeController : Controller
     {
+        BookService bookService = null;
+
+        public HomeController()
+        {
+            bookService = new BookService();
+        }
         public ActionResult Index()
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-
-            return View();
+            ViewBag.Title = "Book List";
+            var books = bookService.GetAllBooks();
+            return View(books);
         }
 
         public ActionResult About()

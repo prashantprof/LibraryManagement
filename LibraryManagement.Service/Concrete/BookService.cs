@@ -82,7 +82,7 @@ namespace LibraryManagement.Service.Concrete
                     {
                         extBook.BookName = newBook.BookName;
                         extBook.LongDescription = newBook.LongDescription;
-                        extBook.ShortDescription = newBook.LongDescription.Take(100).ToString();
+                        extBook.ShortDescription = newBook.LongDescription.Substring(0,100);
                         //Author has been changed
                         if (extBook.AutherID != newBook.AutherID)
                             extBook.AutherID = newBook.AutherID;
