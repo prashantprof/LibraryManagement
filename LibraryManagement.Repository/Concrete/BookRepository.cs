@@ -16,6 +16,7 @@ namespace LibraryManagement.Repository.Concrete
         {
             db = new LibraryManagementEntities();
         }
+
         public Book GetBookById(int id)
         {
             return db.Books.Where(x => x.BookID.Equals(id)).FirstOrDefault();
@@ -54,7 +55,7 @@ namespace LibraryManagement.Repository.Concrete
 
         public bool DeleteBook(int id)
         {
-            var existingBook = db.Books.Where(x => x.BookID.Equals(id)).FirstOrDefault();
+            var existingBook = db.Books.Where(x => x.BookID == id).FirstOrDefault();
             if (existingBook != null)
             {
                 db.Books.Remove(existingBook);
@@ -63,6 +64,16 @@ namespace LibraryManagement.Repository.Concrete
             }
             else
                 return false;
+        }
+
+        public List<Book> GetBooksByCategoryId(int categoryID)
+        {
+            return db.Books.Where(x => x.CategoryID == categoryID).ToList();
+        }
+
+        public List<Book> GetBooksByPrice(decimal price)
+        {
+            return db.Books.Where(x => x.Price >= price).ToList();
         }
     }
 }

@@ -18,6 +18,29 @@ namespace LibraryManagement.Service.Concrete
             categoryRepository = new CategoryRepository();
         }
 
+        public CategoryModel GetCategoryById(int id)
+        {
+            try
+            {
+                CategoryModel model = null;
+                Category category = categoryRepository.GetCategoryById(id);
+                if (category !=null)
+                {
+                    model = new CategoryModel()
+                    {
+                        CategoryID = category.CategoryID,
+                        CategoryName = category.CategoryName
+                    };
+                }
+                return model;
+            }
+
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
         public List<CategoryModel> GetAllCategories()
         {
             try
@@ -71,6 +94,14 @@ namespace LibraryManagement.Service.Concrete
             {
                 throw;
             }
+
+
+        }
+        public bool DeleteCategory(int id)
+        {
+            if (id > 0)
+                return categoryRepository.DeleteCategory(id);
+            return false;
         }
     }
 }

@@ -22,6 +22,7 @@ namespace LibraryManagement.Repository.Concrete
             return db.BookIssues.Where(x => x.BookIssueID.Equals(id)).FirstOrDefault();
         }
 
+
         public List<BookIssue> GetBookIssues()
         {
             return db.BookIssues.ToList();
@@ -65,5 +66,7 @@ namespace LibraryManagement.Repository.Concrete
             else
                 return false;
         }
+
+
     }
 }

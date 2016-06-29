@@ -23,6 +23,35 @@ namespace LibraryManagement.Service.Concrete
             categoryService = new CategoryService();
         }
 
+        public BookModel GetBookById(int id)
+        {
+            try
+            {
+                BookModel model = null;
+                Book book = bookRepository.GetBookById(id);
+                if (book != null)
+                {
+                    model = new BookModel()
+                    {
+                        BookID = book.BookID,
+                        BookName = book.BookName,
+                        ShortDescription = book.ShortDescription,
+                        LongDescription = book.LongDescription,
+                        AutherID = book.AutherID,
+                        CategoryID = book.CategoryID,
+                        Price = book.Price,
+                        ImagePath = book.ImagePath
+                    };
+                }
+                return model;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public List<BookModel> GetAllBooks()
         {
             try
@@ -82,7 +111,7 @@ namespace LibraryManagement.Service.Concrete
                     {
                         extBook.BookName = newBook.BookName;
                         extBook.LongDescription = newBook.LongDescription;
-                        extBook.ShortDescription = newBook.LongDescription.Substring(0,100);
+                        extBook.ShortDescription = newBook.LongDescription.Substring(0, 100);
                         //Author has been changed
                         if (extBook.AutherID != newBook.AutherID)
                             extBook.AutherID = newBook.AutherID;
@@ -122,6 +151,112 @@ namespace LibraryManagement.Service.Concrete
             return GetAllBooks();
         }
 
+        public bool DeleteBook(int id)
+        {
+            if (id > 0)
+                return bookRepository.DeleteBook(id);
+            return false;
+        }
 
+
+
+
+        public List<BookModel> GetBooksByCategoryId(int categoryId)
+        {
+            try
+            {
+                List<BookModel> modelList = new List<BookModel>();
+                List<Book> books = bookRepository.GetBooksByCategoryId(categoryId);
+                if (books != null && books.Any())
+                {
+                    BookModel bookModel = null;
+                    foreach (var book in books)
+                    {
+                        bookModel = new BookModel()
+                        {
+                            AutherID = book.AutherID,
+                            BookID = book.BookID,
+                            BookName = book.BookName,
+                            CategoryID = book.CategoryID,
+                            ImagePath = book.ImagePath,
+                            LongDescription = book.LongDescription,
+                            Price = book.Price,
+                            ShortDescription = book.ShortDescription
+                        };
+
+                        bookModel.AuthorDetails = new AuthorModel()
+                        {
+                            AuthorID = book.Author.AuthorID,
+                            FirstName = book.Author.FirstName,
+                            LastName = book.Author.LastName,
+                            AboutAuthor = book.Author.AboutAuthor
+                        };
+
+                        bookModel.CategoryDetails = new CategoryModel()
+                        {
+                            CategoryID = book.Category.CategoryID,
+                            CategoryName = book.Category.CategoryName
+                        };
+                        modelList.Add(bookModel);
+                    }
+                }
+
+                return modelList;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
+        public List<BookModel> GetBooksByPrice(decimal price)
+        {
+            try
+            {
+                List<BookModel> modelList = new List<BookModel>();
+                List<Book> books = bookRepository.GetBooksByPrice(price);
+                if (books != null && books.Any())
+                {
+                    BookModel bookModel = null;
+                    foreach (var book in books)
+                    {
+                        bookModel = new BookModel()
+                        {
+                            AutherID = book.AutherID,
+                            BookID = book.BookID,
+                            BookName = book.BookName,
+                            CategoryID = book.CategoryID,
+                            ImagePath = book.ImagePath,
+                            LongDescription = book.LongDescription,
+                            Price = book.Price,
+                            ShortDescription = book.ShortDescription
+                        };
+
+                        bookModel.AuthorDetails = new AuthorModel()
+                        {
+                            AuthorID = book.Author.AuthorID,
+                            FirstName = book.Author.FirstName,
+                            LastName = book.Author.LastName,
+                            AboutAuthor = book.Author.AboutAuthor
+                        };
+
+                        bookModel.CategoryDetails = new CategoryModel()
+                        {
+                            CategoryID = book.Category.CategoryID,
+                            CategoryName = book.Category.CategoryName
+                        };
+                        modelList.Add(bookModel);
+                    }
+                }
+                return modelList;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

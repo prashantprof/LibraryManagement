@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace LibraryManagement.Service.Abstract
 {
-    public interface ICategoryService
+    public interface IUserRoleService
     {
-        CategoryModel GetCategoryById(int id);
-        List<CategoryModel> GetAllCategories();
+        UserRoleModel GetUserRoleById(int id);
 
-        int SaveCategory(CategoryModel category);
+        List<UserRoleModel> UserRoles();
 
-        bool DeleteCategory(int id);
+        int SaveUserRole(UserRoleModel newUserRole);
+
+        bool DeleteUserRole(int id);
     }
 }

@@ -36,8 +36,13 @@ namespace LibraryManagement.Repository.Concrete
 
         public bool UpdateAuthor(Author author)
         {
-            if (author != null && author.AuthorID > 0)
+            var existingAuthor = db.Authors.Where(x => x.AuthorID.Equals(author.AuthorID)).FirstOrDefault();
+            if (existingAuthor != null )
             {
+                existingAuthor.AuthorID=author.AuthorID;
+                existingAuthor.FirstName = author.FirstName;
+                existingAuthor.LastName = author.LastName;
+                existingAuthor.AboutAuthor = author.AboutAuthor;
                 db.SaveChanges();
                 return true;
             }

@@ -66,6 +66,29 @@ namespace LibraryManagement.Tests.Services
             //Assert
             Assert.AreNotEqual(listOfBooks.Count, 0);
 
+
         }
+
+        [TestMethod]
+        public void GetBooksByCategoryId()
+        {
+            //Arrange
+
+            //Act
+            var result = bookService.GetBooksByCategoryId(6);
+            //Assert
+            Assert.AreNotEqual(0, result.Count);
+        }
+        [TestMethod]
+        public void GetBooksByPrice()
+        {
+            //Arrange
+
+            //Act
+            var result = bookService.GetBooksByPrice(600);
+            //Assert
+            Assert.AreNotEqual(0, result.Count);
+        }
+
     }
 }
