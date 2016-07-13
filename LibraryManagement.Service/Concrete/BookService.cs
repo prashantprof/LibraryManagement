@@ -27,23 +27,25 @@ namespace LibraryManagement.Service.Concrete
         {
             try
             {
-                BookModel model = null;
+                BookModel bookModel = null;
                 Book book = bookRepository.GetBookById(id);
                 if (book != null)
                 {
-                    model = new BookModel()
+                    bookModel = new BookModel()
                     {
+                        AutherID = book.AutherID,
                         BookID = book.BookID,
                         BookName = book.BookName,
-                        ShortDescription = book.ShortDescription,
-                        LongDescription = book.LongDescription,
-                        AutherID = book.AutherID,
                         CategoryID = book.CategoryID,
+                        ImagePath = book.ImagePath,
+                        LongDescription = book.LongDescription,
                         Price = book.Price,
-                        ImagePath = book.ImagePath
+                        ShortDescription = book.ShortDescription
                     };
+                    bookModel.AuthorDetails = authorService.GetAuthorByID(bookModel.AutherID);
+                    bookModel.CategoryDetails = categoryService.GetCategoryById(bookModel.CategoryID);
                 }
-                return model;
+                return bookModel;
             }
             catch (Exception)
             {
@@ -74,20 +76,8 @@ namespace LibraryManagement.Service.Concrete
                             Price = book.Price,
                             ShortDescription = book.ShortDescription
                         };
-
-                        bookModel.AuthorDetails = new AuthorModel()
-                        {
-                            AuthorID = book.Author.AuthorID,
-                            FirstName = book.Author.FirstName,
-                            LastName = book.Author.LastName,
-                            AboutAuthor = book.Author.AboutAuthor
-                        };
-
-                        bookModel.CategoryDetails = new CategoryModel()
-                        {
-                            CategoryID = book.Category.CategoryID,
-                            CategoryName = book.Category.CategoryName
-                        };
+                        bookModel.AuthorDetails = authorService.GetAuthorByID(bookModel.AutherID);
+                        bookModel.CategoryDetails = categoryService.GetCategoryById(bookModel.CategoryID);
                         modelList.Add(bookModel);
                     }
                 }
@@ -158,9 +148,6 @@ namespace LibraryManagement.Service.Concrete
             return false;
         }
 
-
-
-
         public List<BookModel> GetBooksByCategoryId(int categoryId)
         {
             try
@@ -183,20 +170,8 @@ namespace LibraryManagement.Service.Concrete
                             Price = book.Price,
                             ShortDescription = book.ShortDescription
                         };
-
-                        bookModel.AuthorDetails = new AuthorModel()
-                        {
-                            AuthorID = book.Author.AuthorID,
-                            FirstName = book.Author.FirstName,
-                            LastName = book.Author.LastName,
-                            AboutAuthor = book.Author.AboutAuthor
-                        };
-
-                        bookModel.CategoryDetails = new CategoryModel()
-                        {
-                            CategoryID = book.Category.CategoryID,
-                            CategoryName = book.Category.CategoryName
-                        };
+                        bookModel.AuthorDetails = authorService.GetAuthorByID(bookModel.AutherID);
+                        bookModel.CategoryDetails = categoryService.GetCategoryById(bookModel.CategoryID);
                         modelList.Add(bookModel);
                     }
                 }
@@ -210,7 +185,6 @@ namespace LibraryManagement.Service.Concrete
                 throw;
             }
         }
-
 
         public List<BookModel> GetBooksByPrice(decimal price)
         {
@@ -234,20 +208,8 @@ namespace LibraryManagement.Service.Concrete
                             Price = book.Price,
                             ShortDescription = book.ShortDescription
                         };
-
-                        bookModel.AuthorDetails = new AuthorModel()
-                        {
-                            AuthorID = book.Author.AuthorID,
-                            FirstName = book.Author.FirstName,
-                            LastName = book.Author.LastName,
-                            AboutAuthor = book.Author.AboutAuthor
-                        };
-
-                        bookModel.CategoryDetails = new CategoryModel()
-                        {
-                            CategoryID = book.Category.CategoryID,
-                            CategoryName = book.Category.CategoryName
-                        };
+                        bookModel.AuthorDetails = authorService.GetAuthorByID(bookModel.AutherID);
+                        bookModel.CategoryDetails = categoryService.GetCategoryById(bookModel.CategoryID);
                         modelList.Add(bookModel);
                     }
                 }
@@ -255,6 +217,43 @@ namespace LibraryManagement.Service.Concrete
             }
             catch (Exception)
             {
+                throw;
+            }
+        }
+
+        public List<BookModel> GetBooksByAuthorID(int authorID)
+        {
+            try
+            {
+                List<BookModel> modelList = new List<BookModel>();
+                List<Book> books = bookRepository.GetBooksByAuthorID(authorID);
+                if (books != null && books.Any())
+                {
+                    BookModel bookModel = null;
+                    foreach (var book in books)
+                    {
+                        bookModel = new BookModel()
+                        {
+                            AutherID = book.AutherID,
+                            BookID = book.BookID,
+                            BookName = book.BookName,
+                            CategoryID = book.CategoryID,
+                            ImagePath = book.ImagePath,
+                            LongDescription = book.LongDescription,
+                            Price = book.Price,
+                            ShortDescription = book.ShortDescription
+                        };
+                        bookModel.AuthorDetails = authorService.GetAuthorByID(bookModel.AutherID);
+                        bookModel.CategoryDetails = categoryService.GetCategoryById(bookModel.CategoryID);
+                        modelList.Add(bookModel);
+                    }
+                }
+
+                return modelList;
+            }
+            catch (Exception)
+            {
+
                 throw;
             }
         }

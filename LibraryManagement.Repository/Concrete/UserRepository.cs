@@ -29,9 +29,9 @@ namespace LibraryManagement.Repository.Concrete
             }
         }
 
-        public User GetUserByEmailId(string emailid)
+        public User GetUserByEmailId(string emailId)
         {
-            return db.Users.Where(x => x.EmaildID.Equals(emailid)).FirstOrDefault();
+            return db.Users.Where(x => x.EmaildID.Equals(emailId)).FirstOrDefault();
         }
 
         public List<User> GetUsers()
@@ -79,6 +79,11 @@ namespace LibraryManagement.Repository.Concrete
             }
             else
                 return false;
+        }
+
+        public List<User> GetUsersByRoleID(int roleId)
+        {
+            return db.Users.Where(x => x.RoleID.Equals(roleId)).ToList();
         }
     }
 }

@@ -12,18 +12,20 @@ namespace LibraryManagement.Service.Concrete
 {
     public class AuthorService : IAuthorService
     {
-        AuthorRepository authorReporitory;
+        AuthorRepository authorRepository;
+        BookRepository bookRepository;
 
         public AuthorService()
         {
-            authorReporitory = new AuthorRepository();
+            authorRepository = new AuthorRepository();
+            bookRepository = new BookRepository();
         }
         public AuthorModel GetAuthorByID(int id)
         {
             try
             {
                 AuthorModel model = null;
-                Author author = authorReporitory.GetAuthorByID(id);
+                Author author = authorRepository.GetAuthorByID(id);
                 if (author != null)
                 {
                     model = new AuthorModel()
@@ -41,13 +43,12 @@ namespace LibraryManagement.Service.Concrete
                 throw;
             }
         }
-
         public List<AuthorModel> GetAuthors()
         {
             List<AuthorModel> modelList = null;
             try
             {
-                List<Author> authors = authorReporitory.GetAuthors();
+                List<Author> authors = authorRepository.GetAuthors();
                 if (authors != null && authors.Any())
                 {
                     modelList = authors.Select(author => new AuthorModel()
@@ -77,21 +78,19 @@ namespace LibraryManagement.Service.Concrete
                 throw;
             }
         }
-
-
         public int SaveAuthor(AuthorModel newAuthor)
         {
             if (newAuthor != null)
             {
                 if (newAuthor.AuthorID > 0)
                 {
-                    var author = authorReporitory.GetAuthorByID(newAuthor.AuthorID);
+                    var author = authorRepository.GetAuthorByID(newAuthor.AuthorID);
                     if (author != null)
                     {
                         author.FirstName = newAuthor.FirstName;
                         author.LastName = newAuthor.LastName;
                         author.AboutAuthor = newAuthor.AboutAuthor;
-                        authorReporitory.UpdateAuthor(author);
+                        authorRepository.UpdateAuthor(author);
                         return author.AuthorID;
                     }
                 }
@@ -103,17 +102,17 @@ namespace LibraryManagement.Service.Concrete
                         LastName = newAuthor.LastName,
                         AboutAuthor = newAuthor.AboutAuthor
                     };
-                    return authorReporitory.AddAuthor(author);
+                    return authorRepository.AddAuthor(author);
                 }
             }
             return 0;
         }
-
         public bool DeleteAuthor(int id)
         {
             if (id > 0)
-                return authorReporitory.DeleteAuthor(id);
+                return authorRepository.DeleteAuthor(id);
             return false;
         }
+        
     }
 }

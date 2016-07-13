@@ -10,11 +10,12 @@ namespace LibraryManagement.Repository.Abstract
     interface IUserRepository
     {
         User GetUserById(int id);
-        User GetUserByEmailId(string emailid);
+        User GetUserByEmailId(string emailId);
         List<User> GetUsers();
         int AddUser(User newUser);
         bool UpdateUser(User user);
         bool DeleteUser(int id);
+        List<User> GetUsersByRoleID(int roleId);
 
     }
     

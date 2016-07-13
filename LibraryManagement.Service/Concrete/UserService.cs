@@ -180,5 +180,37 @@ namespace LibraryManagement.Service.Concrete
                 throw;
             }
         }
+
+        public List<UserModel> GetUsersByRoleID(int roleId)
+        {
+            try
+            {
+                List<UserModel> modelList = null;
+                List<User> users = userRepository.GetUsersByRoleID(roleId);
+                if (users != null && users.Any())
+                {
+                    modelList = users.Select(user => new UserModel()
+                    {
+                        UserID = user.UserID,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        EmaildID = user.EmaildID,
+                        Password = user.Password,
+                        MobileNumber = user.MobileNumber,
+                        AddressOne = user.AddressOne,
+                        AddressTwo = user.AddressTwo,
+                        IsActive = user.IsActive,
+                        Deposit = user.Deposit,
+                        RoleID = user.RoleID
+                    }).ToList();
+                }
+                return modelList;
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
     }
 }

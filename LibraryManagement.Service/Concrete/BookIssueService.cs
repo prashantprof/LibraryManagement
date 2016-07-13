@@ -10,13 +10,17 @@ using System.Threading.Tasks;
 
 namespace LibraryManagement.Service.Concrete
 {
-    public class BookIssueService :IBookIssueService
+    public class BookIssueService : IBookIssueService
     {
         BookIssueRepository bookissueRepository;
+        BookService bookService;
+        UserService userService;
 
         public BookIssueService()
         {
             bookissueRepository = new BookIssueRepository();
+            bookService = new BookService();
+            userService = new UserService();
         }
 
         public BookIssueModel GetBookIssueById(int id)
@@ -47,62 +51,32 @@ namespace LibraryManagement.Service.Concrete
             }
         }
 
-        public List<BookIssueModel> GetBookIssues()
-        {
-            
-            try
-            {
-                List<BookIssueModel> modelList = null;
-                List<BookIssue> bookissues = bookissueRepository.GetBookIssues();
-                if (bookissues != null && bookissues.Any())
-                {
-                    modelList = bookissues.Select(bookissue => new BookIssueModel()
-                    {
-                        BookIssueID = bookissue.BookIssueID,
-                        BookID = bookissue.BookID,
-                        UserID = bookissue.UserID,
-                        IssueDate = bookissue.IssueDate,
-                        ReturnDate = bookissue.ReturnDate,
-                        FineAmount = bookissue.FineAmount,
-                        IssuerID = bookissue.IssuerID
-                    }).ToList();                   
-                }
-                return modelList;
-            }
-            catch (Exception)
-            {
-                
-                throw;
-            }
-            
-        }
-
-        public int SaveBookIssue(BookIssue newBookIssue)
+        public int SaveBookIssue(BookIssueModel newBookIssue)
         {
             try
             {
                 if (newBookIssue != null)
                 {
-                    if (newBookIssue.BookIssueID>0)
+                    if (newBookIssue.BookIssueID > 0)
                     {
-                        var bookissue = bookissueRepository.GetBookIsssueById(newBookIssue.BookIssueID);
-                        if (bookissue != null)
+                        var bookIssue = bookissueRepository.GetBookIsssueById(newBookIssue.BookIssueID);
+                        if (bookIssue != null)
                         {
-                            bookissue.BookIssueID = newBookIssue.BookIssueID;
-                            bookissue.BookID = newBookIssue.BookID;
-                            bookissue.UserID = newBookIssue.UserID;
-                            bookissue.IssueDate = newBookIssue.IssueDate;
-                            bookissue.ReturnDate = newBookIssue.ReturnDate;
-                            bookissue.FineAmount = newBookIssue.FineAmount;
-                            bookissue.IssuerID = newBookIssue.IssuerID;
-                            bookissueRepository.UpdateBookIssue(bookissue);
-                            return bookissue.BookIssueID;
+                            bookIssue.BookIssueID = newBookIssue.BookIssueID;
+                            bookIssue.BookID = newBookIssue.BookID;
+                            bookIssue.UserID = newBookIssue.UserID;
+                            bookIssue.IssueDate = newBookIssue.IssueDate;
+                            bookIssue.ReturnDate = newBookIssue.ReturnDate;
+                            bookIssue.FineAmount = newBookIssue.FineAmount;
+                            bookIssue.IssuerID = newBookIssue.IssuerID;
+                            bookissueRepository.UpdateBookIssue(bookIssue);
+                            return bookIssue.BookIssueID;
                         }
                     }
                 }
                 else
                 {
-                    var bookissue = new BookIssue()
+                    var bookIssue = new BookIssue()
                     {
                         BookIssueID = newBookIssue.BookIssueID,
                         BookID = newBookIssue.BookID,
@@ -112,13 +86,12 @@ namespace LibraryManagement.Service.Concrete
                         FineAmount = newBookIssue.FineAmount,
                         IssuerID = newBookIssue.IssuerID
                     };
-                    return bookissueRepository.AddBookIssue(bookissue);
+                    return bookissueRepository.AddBookIssue(bookIssue);
                 }
                 return 0;
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }
@@ -131,9 +104,114 @@ namespace LibraryManagement.Service.Concrete
         }
 
 
-        public List<BookIssue> BookIssues()
+        public List<BookIssueModel> GetBookIssueByUserId(int userID)
         {
-            throw new NotImplementedException();
+            try
+            {
+                List<BookIssueModel> modelList = null;
+                List<BookIssue> bookIssues = bookissueRepository.GetBookIssueByUserId(userID);
+                if (bookIssues != null && bookIssues.Any())
+                {
+                    BookIssueModel model = null;
+                    foreach (var bookIssue in bookIssues)
+                    {
+                        model = new BookIssueModel()
+                        {
+                            BookIssueID = bookIssue.BookIssueID,
+                            BookID = bookIssue.BookID,
+                            UserID = bookIssue.UserID,
+                            IssueDate = bookIssue.IssueDate,
+                            ReturnDate = bookIssue.ReturnDate,
+                            FineAmount = bookIssue.FineAmount,
+                            IssuerID = bookIssue.IssuerID
+                        };
+                        model.BookDetails = bookService.GetBookById(model.BookID);
+                        model.UserDetails = userService.GetUserById(model.UserID);
+                        model.IssuerDetails = userService.GetUserById(model.IssuerID);
+                        modelList.Add(model);
+                    }
+                }
+                return modelList;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
+        public List<BookIssueModel> BookIssues()
+        {
+            try
+            {
+                List<BookIssueModel> modelList = new List<BookIssueModel>();
+                List<BookIssue> bookIssues = bookissueRepository.GetBookIssues();
+                if (bookIssues != null && bookIssues.Any())
+                {
+                    BookIssueModel model = null;
+                    foreach (var bookIssue in bookIssues)
+                    {
+                        model = new BookIssueModel()
+                        {
+                            BookIssueID = bookIssue.BookIssueID,
+                            BookID = bookIssue.BookID,
+                            UserID = bookIssue.UserID,
+                            IssueDate = bookIssue.IssueDate,
+                            ReturnDate = bookIssue.ReturnDate,
+                            FineAmount = bookIssue.FineAmount,
+                            IssuerID = bookIssue.IssuerID
+                        };
+                        model.BookDetails = bookService.GetBookById(model.BookID);
+                        model.UserDetails = userService.GetUserById(model.UserID);
+                        model.IssuerDetails = userService.GetUserById(model.IssuerID);
+                        modelList.Add(model);
+                    }
+                }
+                return modelList;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public List<BookIssueModel> GetunreturnedBooks()
+        {
+            try
+            {
+                List<BookIssueModel> modelList = new List<BookIssueModel>();
+                List<BookIssue> bookIssues = bookissueRepository.GetBookIssues();
+                if (bookIssues != null && bookIssues.Any())
+                {
+                    BookIssueModel model = null;
+                    foreach (var bookIssue in bookIssues)
+                    {
+                        if (bookIssue.ReturnDate.HasValue == false)
+                        {
+                            model = new BookIssueModel()
+                            {
+                                BookIssueID = bookIssue.BookIssueID,
+                                BookID = bookIssue.BookID,
+                                UserID = bookIssue.UserID,
+                                IssueDate = bookIssue.IssueDate,
+                                ReturnDate = bookIssue.ReturnDate,
+                                FineAmount = bookIssue.FineAmount,
+                                IssuerID = bookIssue.IssuerID
+                            };
+                            model.BookDetails = bookService.GetBookById(model.BookID);
+                            model.UserDetails = userService.GetUserById(model.UserID);
+                            model.IssuerDetails = userService.GetUserById(model.IssuerID);
+                            modelList.Add(model);
+                        }
+                    }
+                }
+                return modelList;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 

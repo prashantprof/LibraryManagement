@@ -12,10 +12,14 @@ namespace LibraryManagement.Service.Abstract
     {
         BookIssueModel GetBookIssueById(int id);
 
-        List<BookIssue> BookIssues();
+        List<BookIssueModel> BookIssues();
 
-        int SaveBookIssue(BookIssue newBookIssue);
+        int SaveBookIssue(BookIssueModel newBookIssue);
 
         bool DeleteBookIssue(int id);
+
+        List<BookIssueModel> GetBookIssueByUserId(int userID);
+
+        List<BookIssueModel> GetunreturnedBooks();
     }
 }

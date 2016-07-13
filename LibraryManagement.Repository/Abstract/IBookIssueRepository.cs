@@ -17,6 +17,8 @@ namespace LibraryManagement.Repository.Abstract
 
         bool UpdateBookIssue(BookIssue bookissue);
 
-        bool DeleteBookIssue(int id);
+        bool DeleteBookIssue(int userID);
+        List<BookIssue> GetBookIssueByUserId(int userID);
+        
     }
 }

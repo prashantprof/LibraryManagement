@@ -48,9 +48,7 @@ namespace LibraryManagement.Repository.Concrete
             }
             else
                 return false;
-        }
-
-
+        }       
         public bool DeleteAuthor(int id)
         {
             var existingAuthor = db.Authors.Where(x => x.AuthorID.Equals(id)).FirstOrDefault();
@@ -63,5 +61,6 @@ namespace LibraryManagement.Repository.Concrete
             else
                 return false;
         }
+
     }
 }

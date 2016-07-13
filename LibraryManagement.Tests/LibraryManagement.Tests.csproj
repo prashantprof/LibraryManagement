@@ -128,6 +128,8 @@
     <Compile Include="Services\AuthorTest.cs" />
     <Compile Include="Services\CategoryTest.cs" />
     <Compile Include="Services\BookTest.cs" />
+    <Compile Include="Services\BookIssueTest.cs" />
+    <Compile Include="Services\UserTest.cs" />
     <Compile Include="Services\UserRoleTest.cs" />
   </ItemGroup>
   <ItemGroup>

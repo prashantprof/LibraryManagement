@@ -18,5 +18,8 @@ namespace LibraryManagement.Service.Abstract
         bool DeleteUser(int id);
 
         UserVerificationModel VerifyUser(string emailID, string password);
+
+        List<UserModel> GetUsersByRoleID(int roleId);
+
     }
 }

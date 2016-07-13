@@ -9,7 +9,7 @@ namespace LibraryManagement.Tests.Services
     public class UserRoleTest
     {
         UserRoleService service = null;
-                public UserRoleTest()
+        public UserRoleTest()
         {
             service = new UserRoleService();
         }

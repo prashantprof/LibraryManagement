@@ -16,5 +16,6 @@ namespace LibraryManagement.Repository.Abstract
         bool DeleteBook(int id);
         List<Book> GetBooksByCategoryId(int categoryID);
         List<Book> GetBooksByPrice(decimal price);
+        List<Book> GetBooksByAuthorID(int authorID);
     }
 }

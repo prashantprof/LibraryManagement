@@ -11,30 +11,25 @@ namespace LibraryManagement.Repository.Concrete
     public class BookRepository : IBookRepository
     {
         LibraryManagementEntities db = null;
-
         public BookRepository()
         {
             db = new LibraryManagementEntities();
         }
-
         public Book GetBookById(int id)
         {
             return db.Books.Where(x => x.BookID.Equals(id)).FirstOrDefault();
         }
-
         public List<Book> GetBooks()
         {
             return db.Books.ToList();
         }
-
         public int AddBook(Book newBook)
         {
             db.Books.Add(newBook);
             db.SaveChanges();
             return newBook.BookID;
         }
-
-        public bool UpdateBook(DatabaseEntities.Book book)
+        public bool UpdateBook(Book book)
         {
             var existingBook = db.Books.Where(x => x.BookID.Equals(book.BookID)).FirstOrDefault();
             if (existingBook != null)
@@ -52,7 +47,6 @@ namespace LibraryManagement.Repository.Concrete
             else
                 return false;
         }
-
         public bool DeleteBook(int id)
         {
             var existingBook = db.Books.Where(x => x.BookID == id).FirstOrDefault();
@@ -65,15 +59,17 @@ namespace LibraryManagement.Repository.Concrete
             else
                 return false;
         }
-
         public List<Book> GetBooksByCategoryId(int categoryID)
         {
             return db.Books.Where(x => x.CategoryID == categoryID).ToList();
         }
-
         public List<Book> GetBooksByPrice(decimal price)
         {
             return db.Books.Where(x => x.Price >= price).ToList();
+        }
+        public List<Book> GetBooksByAuthorID(int authorID)
+        {
+            return db.Books.Where(x => x.AutherID == authorID).ToList();
         }
     }
 }

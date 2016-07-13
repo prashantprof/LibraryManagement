@@ -67,6 +67,9 @@ namespace LibraryManagement.Repository.Concrete
                 return false;
         }
 
-
+        public List<BookIssue> GetBookIssueByUserId(int userID)
+        {
+            return db.BookIssues.Where(x => x.UserID == userID).ToList();
+        }
     }
 }
