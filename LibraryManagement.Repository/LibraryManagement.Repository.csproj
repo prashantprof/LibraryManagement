@@ -95,7 +95,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="DatabaseEntities\LibraryManagementData.edmx.sql" />
+  </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="DatabaseEntities\LibraryManagementData.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
