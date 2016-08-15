@@ -27,9 +27,9 @@ namespace LibraryManagement.Repository.DatabaseEntities
     
         public virtual DbSet<Author> Authors { get; set; }
         public virtual DbSet<BookIssue> BookIssues { get; set; }
-        public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<UserRole> UserRoles { get; set; }
-        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Book> Books { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<ResetLink> ResetLinks { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

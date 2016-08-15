@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -43,13 +44,11 @@
     <Compile Include="Abstract\IBookIssueService.cs" />
     <Compile Include="Abstract\IBookService.cs" />
     <Compile Include="Abstract\ICategoryService.cs" />
-    <Compile Include="Abstract\IUserRoleService.cs" />
     <Compile Include="Abstract\IUserService.cs" />
     <Compile Include="Concrete\AuthorService.cs" />
     <Compile Include="Concrete\BookIssueService.cs" />
     <Compile Include="Concrete\BookService.cs" />
     <Compile Include="Concrete\CategoryService.cs" />
-    <Compile Include="Concrete\UserRoleService.cs" />
     <Compile Include="Concrete\UserService.cs" />
     <Compile Include="Models\AuthorModel.cs" />
     <Compile Include="Models\BookIssueModel.cs" />

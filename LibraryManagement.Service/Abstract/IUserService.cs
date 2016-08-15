@@ -11,6 +11,8 @@ namespace LibraryManagement.Service.Abstract
     {
         UserModel GetUserById(int id);
 
+        UserModel GetUserByEmailId(string id);
+
         List<UserModel> GetUsers();
 
         int SaveUser(UserModel newUserModel);
@@ -19,7 +21,14 @@ namespace LibraryManagement.Service.Abstract
 
         UserVerificationModel VerifyUser(string emailID, string password);
 
-        List<UserModel> GetUsersByRoleID(int roleId);
+        bool ResetPassword(string emailID, string oldPassword, string newPassword);
 
+        string ResetPassword(string emailID, string newPassword);
+
+        int GenerateRandomNumber(string userID);
+
+        bool MatchRandomNumber(int userID, int randomNum);
+
+        bool DeleteRandomNumber(int userID, int randomNum);
     }
 }

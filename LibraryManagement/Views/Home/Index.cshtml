@@ -1,14 +1,43 @@
 ﻿@model IEnumerable<LibraryManagement.Service.Models.BookModel>
 
-@section featured {
-    <section class="featured">
-        <div class="content-wrapper">
-            <hgroup class="title">
-                <h1>@ViewBag.Title</h1>
-            </hgroup>
+<div id="featured">
+    <h3>This is a Library Management System</h3>
+    <p>
+        This website template has been designed by Free Website Templates for you, for free. You can
+        replace all this text with your own text. Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+        sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi
+        enim ad minim veniam, quis nostrud exerci tation ullamcorper
+    </p>
+</div>
+<ul class="blog">
+    <li>
+        <div>
+            <a href="blog.html"><img src="@Url.Content("~/Content/LibraryTheme/images/pastries.jpg")" alt="" /></a>
+            <p>
+                This website template has been designed by Free Website Templates for you, for free.
+                You can replace all this text with your own text.
+            </p>
         </div>
-    </section>
-}
+    </li>
+    <li>
+        <div>
+            <a href="blog.html"><img src="@Url.Content("~/Content/LibraryTheme/images/fruits.jpg")" alt="" /></a>
+            <p>
+                This website template has been designed by Free Website Templates for you, for free.
+                You can replace all this text with your own text.
+            </p>
+        </div>
+    </li>
+    <li>
+        <div>
+            <a href="blog.html"><img src="@Url.Content("~/Content/LibraryTheme/images/cosmetics.jpg")" alt="" /></a>
+            <p>
+                This website template has been designed by Free Website Templates for you, for free.
+                You can replace all this text with your own text.
+            </p>
+        </div>
+    </li>
+</ul>
 <div>
     <p>
         @Html.ActionLink("Add New Book", "AddBook", "Home")

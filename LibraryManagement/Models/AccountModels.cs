@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
@@ -58,7 +59,8 @@ namespace LibraryManagement.Models
     public class LoginModel
     {
         [Required]
-        [Display(Name = "User name")]
+        [DisplayName("Email ID")]
+        [EmailAddress(ErrorMessage = "Invalid Emaid ID")]
         public string UserName { get; set; }
 
         [Required]
@@ -85,6 +87,30 @@ namespace LibraryManagement.Models
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
+    }
+
+    public class ResetPsswordEmailModel
+    {
+        [Required]
+        [DisplayName("Email ID")]
+        [EmailAddress(ErrorMessage = "Invalid Emaid ID")]
+        public string EmaildID { get; set; }
+    }
+
+    public class ResetPasswordModel
+    {
+        public string EmaildID { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "New Password")]
+        public string NewPassword { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("NewPassword", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
 

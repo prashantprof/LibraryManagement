@@ -60,7 +60,6 @@ namespace LibraryManagement.Repository.Concrete
                 existingUser.AddressTwo = user.AddressTwo;
                 existingUser.IsActive = user.IsActive;
                 existingUser.Deposit = user.Deposit;
-                existingUser.RoleID = user.RoleID;
                 db.SaveChanges();
                 return true;
             }
@@ -81,9 +80,42 @@ namespace LibraryManagement.Repository.Concrete
                 return false;
         }
 
-        public List<User> GetUsersByRoleID(int roleId)
+        public bool GenerateRandomNumber(string emaiID, int randomNum)
         {
-            return db.Users.Where(x => x.RoleID.Equals(roleId)).ToList();
+            var user = GetUserByEmailId(emaiID);
+            if (user != null)
+            {
+                ResetLink newLink = new ResetLink()
+                   {
+                       UserID = user.UserID,
+                       RandomCode = randomNum
+                   };
+                db.ResetLinks.Add(newLink);
+                db.SaveChanges();
+                return true;
+            }
+            return false;
         }
+        public bool MatchRandomNumber(int userID, int randomNum)
+        {
+            var match = db.ResetLinks.Where(x => x.UserID.Equals(userID) && x.RandomCode.Equals(randomNum)).FirstOrDefault();
+            if (match != null)
+                return true;
+            return false;
+        }
+
+        public bool DeleteRandomNumber(int userID, int randomNum)
+        {
+
+            var result = db.ResetLinks.Where(x => x.UserID.Equals(userID) && x.RandomCode.Equals(randomNum)).FirstOrDefault();
+            if (result != null)
+            {
+                db.ResetLinks.Remove(result);
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
     }
 }

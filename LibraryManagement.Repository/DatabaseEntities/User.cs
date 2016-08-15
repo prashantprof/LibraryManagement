@@ -18,6 +18,7 @@ namespace LibraryManagement.Repository.DatabaseEntities
         {
             this.BookIssues = new HashSet<BookIssue>();
             this.BookIssues1 = new HashSet<BookIssue>();
+            this.ResetLinks = new HashSet<ResetLink>();
         }
     
         public int UserID { get; set; }
@@ -25,15 +26,14 @@ namespace LibraryManagement.Repository.DatabaseEntities
         public string LastName { get; set; }
         public string EmaildID { get; set; }
         public string Password { get; set; }
-        public byte[] MobileNumber { get; set; }
+        public string MobileNumber { get; set; }
         public string AddressOne { get; set; }
         public string AddressTwo { get; set; }
         public bool IsActive { get; set; }
         public Nullable<decimal> Deposit { get; set; }
-        public int RoleID { get; set; }
     
         public virtual ICollection<BookIssue> BookIssues { get; set; }
         public virtual ICollection<BookIssue> BookIssues1 { get; set; }
-        public virtual UserRole UserRole { get; set; }
+        public virtual ICollection<ResetLink> ResetLinks { get; set; }
     }
 }

@@ -12,16 +12,12 @@ namespace LibraryManagement.Repository.DatabaseEntities
     using System;
     using System.Collections.Generic;
     
-    public partial class UserRole
+    public partial class ResetLink
     {
-        public UserRole()
-        {
-            this.Users = new HashSet<User>();
-        }
+        public int ResetID { get; set; }
+        public int UserID { get; set; }
+        public int RandomCode { get; set; }
     
-        public int RoleID { get; set; }
-        public string Role { get; set; }
-    
-        public virtual ICollection<User> Users { get; set; }
+        public virtual User User { get; set; }
     }
 }

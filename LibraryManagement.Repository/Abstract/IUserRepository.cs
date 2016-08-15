@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LibraryManagement.Repository.Abstract
 {
-    interface IUserRepository
+    public interface IUserRepository
     {
         User GetUserById(int id);
         User GetUserByEmailId(string emailId);
@@ -15,8 +15,9 @@ namespace LibraryManagement.Repository.Abstract
         int AddUser(User newUser);
         bool UpdateUser(User user);
         bool DeleteUser(int id);
-        List<User> GetUsersByRoleID(int roleId);
-
+        bool GenerateRandomNumber(string emailID, int randomNum);
+        bool MatchRandomNumber(int userID, int randomNum);
+        bool DeleteRandomNumber(int userID, int randomNum);
     }
-    
+
 }

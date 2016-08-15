@@ -10,6 +10,11 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using LibraryManagement.Filters;
 using LibraryManagement.Models;
+using LibraryManagement.Service.Concrete;
+using LibraryManagement.Service.Models;
+using System.Net.Mail;
+using System.Net;
+using System.Text;
 
 namespace LibraryManagement.Controllers
 {
@@ -17,8 +22,12 @@ namespace LibraryManagement.Controllers
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
-        //
-        // GET: /Account/Login
+        private readonly UserService userService = null;
+
+        public AccountController()
+        {
+            userService = new UserService();
+        }
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -27,21 +36,37 @@ namespace LibraryManagement.Controllers
             return View();
         }
 
-        //
-        // POST: /Account/Login
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            string message = string.Empty;
+            ViewBag.ForgetPassword = false;
+            ViewBag.UnRegistered = false;
+            var userAuthModel = userService.VerifyUser(model.UserName, model.Password);
+
+            if (userAuthModel.Status.Equals(UserVarificationStatus.None))
             {
-                return RedirectToLocal(returnUrl);
+                if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+                {
+                    return RedirectToLocal(returnUrl);
+                }
+            }
+            else if (userAuthModel.Status.Equals(UserVarificationStatus.PasswordIncorrect))
+            {
+                message = "Password is incorrect.";
+                ViewBag.ForgetPassword = true;
+            }
+            else if (userAuthModel.Status.Equals(UserVarificationStatus.UserUnregistered))
+            {
+                message = "Email ID is not registerd.";
+                ViewBag.UnRegistered = true;
             }
 
             // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            ModelState.AddModelError("", message);
+
             return View(model);
         }
 
@@ -72,21 +97,36 @@ namespace LibraryManagement.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterModel model)
+        public ActionResult Register(UserModel model)
         {
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                    WebSecurity.Login(model.UserName, model.Password);
-                    return RedirectToAction("Index", "Home");
+                    int userID = userService.SaveUser(model);
+                    if (userID > 0)
+                    {
+                        WebSecurity.CreateUserAndAccount(model.EmaildID, model.Password);
+                        WebSecurity.Login(model.EmaildID, model.Password);
+                        if (Roles.RoleExists("User") == false)
+                            Roles.CreateRole("User");
+                        Roles.AddUserToRole(model.EmaildID, "User");
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Sorry but the service is unable to register you this time. Please try again after some time.");
+                    }
                 }
                 catch (MembershipCreateUserException e)
                 {
                     ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
                 }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Something is missing. Please check the form and fill it properly.");
             }
 
             // If we got this far, something failed, redisplay form
@@ -152,10 +192,13 @@ namespace LibraryManagement.Controllers
                 if (ModelState.IsValid)
                 {
                     // ChangePassword will throw an exception rather than return false in certain failure scenarios.
-                    bool changePasswordSucceeded;
+                    bool changePasswordSucceeded = false;
                     try
                     {
-                        changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);
+                        if (userService.ResetPassword(User.Identity.Name, model.OldPassword, model.NewPassword))
+                        {
+                            changePasswordSucceeded = WebSecurity.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);
+                        }
                     }
                     catch (Exception)
                     {
@@ -200,6 +243,96 @@ namespace LibraryManagement.Controllers
             return View(model);
         }
 
+        [AllowAnonymous]
+        public ActionResult ResetPasswordEmail()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult ResetPasswordEmail(ResetPsswordEmailModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = userService.GetUserByEmailId(model.EmaildID);
+                if (user != null)
+                {
+                    int randNo = userService.GenerateRandomNumber(model.EmaildID);
+
+                    StringBuilder sb = new StringBuilder("Hello <br/><hr>");
+                    sb.Append("To reset your password click the link below: <br/>");
+
+                    sb.Append("http://" + Request.Url.Authority + "/Account/ResetPassword?userID=" + user.UserID + "&resetID=" + randNo + "&email=" + model.EmaildID);
+
+                    MailMessage mailMessage = new MailMessage("siddhantsoni2695@gmail.com", model.EmaildID, "Reset Password For Library Management", sb.ToString());
+                    mailMessage.IsBodyHtml = true;
+
+                    SmtpClient client = new SmtpClient
+                    {
+                        Host = "smtp.gmail.com",
+                        Port = 587,
+                        UseDefaultCredentials = false,
+                        DeliveryMethod = SmtpDeliveryMethod.Network,
+                        Credentials = new NetworkCredential("siddhantsoni2695@gmail.com", "manhattan344"),
+                        EnableSsl = true,
+                        Timeout = 10000
+                    };
+                    client.Send(mailMessage);
+
+                    ViewBag.message = "An email has been sent to your email id:" + model.EmaildID + ". Please refer to the email and reset your password.";
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Email ID is not registered.");
+                }
+            }
+            return View(model);
+        }
+
+
+        [AllowAnonymous]
+        public ActionResult ResetPassword(int userID, int resetID, string email)
+        {
+            try
+            {
+                if (userService.MatchRandomNumber(userID, resetID))
+                {
+                    ResetPasswordModel model = new ResetPasswordModel() { EmaildID = email };
+                    return View(model);
+                }
+                else
+                {
+                    ViewBag.message = "The password link has been expired. Please generate new link to your email.";
+                    return View("ResetPasswordEmail");
+                }
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult ResetPassword(ResetPasswordModel model)
+        {
+            try
+            {
+                string oldPassword = userService.ResetPassword(model.EmaildID, model.NewPassword);
+                if (!string.IsNullOrEmpty(oldPassword))
+                {
+                    WebSecurity.ChangePassword(model.EmaildID, oldPassword, model.NewPassword);
+                    ViewBag.message = "Your password has been reset. Please login with your new password.";
+                    return View(model);
+                }
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
+        }
         //
         // POST: /Account/ExternalLogin
 

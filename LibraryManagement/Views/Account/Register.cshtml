@@ -1,34 +1,84 @@
-﻿@model LibraryManagement.Models.RegisterModel
+﻿@model LibraryManagement.Service.Models.UserModel
+
 @{
     ViewBag.Title = "Register";
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>Create a new account.</h2>
-</hgroup>
+<h2>Register</h2>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()
 
     <fieldset>
-        <legend>Registration Form</legend>
-        <ol>
-            <li>
-                @Html.LabelFor(m => m.UserName)
-                @Html.TextBoxFor(m => m.UserName)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.ConfirmPassword)
-                @Html.PasswordFor(m => m.ConfirmPassword)
-            </li>
-        </ol>
-        <input type="submit" value="Register" />
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FirstName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FirstName)
+            @Html.ValidationMessageFor(model => model.FirstName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastName)
+            @Html.ValidationMessageFor(model => model.LastName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EmaildID)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EmaildID)
+            @Html.ValidationMessageFor(model => model.EmaildID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Password)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Password)
+            @Html.ValidationMessageFor(model => model.Password)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ConfirmPassword)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ConfirmPassword)
+            @Html.ValidationMessageFor(model => model.ConfirmPassword)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.MobileNumber)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.MobileNumber)
+            @Html.ValidationMessageFor(model => model.MobileNumber)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AddressOne)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AddressOne)
+            @Html.ValidationMessageFor(model => model.AddressOne)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AddressTwo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AddressTwo)
+            @Html.ValidationMessageFor(model => model.AddressTwo)
+        </div>
+
+        <p>
+            <input type="submit" value="Register" />
+        </p>
     </fieldset>
 }
 

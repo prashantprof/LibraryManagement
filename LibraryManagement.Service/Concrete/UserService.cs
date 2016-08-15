@@ -29,21 +29,50 @@ namespace LibraryManagement.Service.Concrete
                 {
                     model = new UserModel()
                     {
-                        UserID = model.UserID,
-                        FirstName = model.FirstName,
-                        LastName = model.LastName,
-                        EmaildID = model.EmaildID,
-                        Password = model.Password,
-                        MobileNumber = model.MobileNumber,
-                        AddressOne = model.AddressOne,
-                        AddressTwo = model.AddressTwo,
-                        IsActive = model.IsActive,
-                        Deposit = model.Deposit,
-                        RoleID = model.RoleID
+                        UserID = user.UserID,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        EmaildID = user.EmaildID,
+                        Password = user.Password,
+                        MobileNumber = user.MobileNumber,
+                        AddressOne = user.AddressOne,
+                        AddressTwo = user.AddressTwo,
+                        IsActive = user.IsActive,
+                        Deposit = user.Deposit
                     };
                 }
                 return model;
 
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public UserModel GetUserByEmailId(string id)
+        {
+            try
+            {
+                UserModel model = null;
+                User user = userRepository.GetUserByEmailId(id);
+                if (user != null)
+                {
+                    model = new UserModel()
+                    {
+                        UserID = user.UserID,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        EmaildID = user.EmaildID,
+                        Password = user.Password,
+                        MobileNumber = user.MobileNumber,
+                        AddressOne = user.AddressOne,
+                        AddressTwo = user.AddressTwo,
+                        IsActive = user.IsActive,
+                        Deposit = user.Deposit
+                    };
+                }
+                return model;
             }
             catch (Exception)
             {
@@ -71,8 +100,7 @@ namespace LibraryManagement.Service.Concrete
                         AddressOne = user.AddressOne,
                         AddressTwo = user.AddressTwo,
                         IsActive = user.IsActive,
-                        Deposit = user.Deposit,
-                        RoleID = user.RoleID
+                        Deposit = user.Deposit
                     }).ToList();
                 }
                 return modelList;
@@ -119,8 +147,7 @@ namespace LibraryManagement.Service.Concrete
                             AddressOne = newUser.AddressOne,
                             AddressTwo = newUser.AddressTwo,
                             IsActive = newUser.IsActive,
-                            Deposit = newUser.Deposit,
-                            RoleID = newUser.RoleID
+                            Deposit = newUser.Deposit
                         };
                         return userRepository.AddUser(user);
                     }
@@ -142,9 +169,12 @@ namespace LibraryManagement.Service.Concrete
 
         public UserVerificationModel VerifyUser(string emailID, string password)
         {
-            UserVerificationModel model = new UserVerificationModel();
+            UserVerificationModel model = new UserVerificationModel()
+            {
+                Status = UserVarificationStatus.None
+            };
             model.UserDetails = null;
-            model.Message = string.Empty;
+            //model.Message = string.Empty;
             try
             {
                 User user = userRepository.GetUserByEmailId(emailID);
@@ -163,16 +193,15 @@ namespace LibraryManagement.Service.Concrete
                             LastName = user.LastName,
                             MobileNumber = user.MobileNumber,
                             Password = user.Password,
-                            RoleID = user.RoleID,
                             UserID = user.UserID
                         };
                     }
                     else
-                        model.Message = "Password is incorrect.";
+                        model.Status = UserVarificationStatus.PasswordIncorrect;
                 }
                 else
-                    model.Message = "Email ID is not registerd.";
-                
+                    model.Status = UserVarificationStatus.UserUnregistered;
+
                 return model;
             }
             catch (Exception)
@@ -181,36 +210,76 @@ namespace LibraryManagement.Service.Concrete
             }
         }
 
-        public List<UserModel> GetUsersByRoleID(int roleId)
+        public string ResetPassword(string emailID, string newPassword)
         {
             try
             {
-                List<UserModel> modelList = null;
-                List<User> users = userRepository.GetUsersByRoleID(roleId);
-                if (users != null && users.Any())
+                string oldPassword = string.Empty;
+                var user = userRepository.GetUserByEmailId(emailID);
+
+                if (user != null)
                 {
-                    modelList = users.Select(user => new UserModel()
-                    {
-                        UserID = user.UserID,
-                        FirstName = user.FirstName,
-                        LastName = user.LastName,
-                        EmaildID = user.EmaildID,
-                        Password = user.Password,
-                        MobileNumber = user.MobileNumber,
-                        AddressOne = user.AddressOne,
-                        AddressTwo = user.AddressTwo,
-                        IsActive = user.IsActive,
-                        Deposit = user.Deposit,
-                        RoleID = user.RoleID
-                    }).ToList();
+                    oldPassword = user.Password;
+                    user.Password = newPassword;
+                    userRepository.UpdateUser(user);
+                    return oldPassword;
                 }
-                return modelList;
+                return oldPassword;
             }
             catch (Exception)
             {
-                
                 throw;
             }
         }
+
+        public bool ResetPassword(string emailID, string oldPassword, string newPassword)
+        {
+            try
+            {
+                var user = userRepository.GetUserByEmailId(emailID);
+
+                if (user != null)
+                {
+                    var model = GetUserById(user.UserID);
+                    if (model.Password.Equals(oldPassword))
+                    {
+                        model.Password = newPassword;
+                        SaveUser(model);
+                        return true;
+                    }
+                }
+                return false;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public int GenerateRandomNumber(string emailID)
+        {
+            Random generator = new Random();
+            int randomNum = generator.Next(100000, 999999);
+            userRepository.GenerateRandomNumber(emailID, randomNum);
+            return randomNum;
+        }
+
+        public bool MatchRandomNumber(int userID, int randomNum)
+        {
+            try
+            {
+                return userRepository.MatchRandomNumber(userID, randomNum);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public bool DeleteRandomNumber(int userID, int randomNum)
+        {
+            return userRepository.DeleteRandomNumber(userID, randomNum);
+        }
+
     }
 }

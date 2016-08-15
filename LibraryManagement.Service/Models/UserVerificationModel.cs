@@ -10,6 +10,15 @@ namespace LibraryManagement.Service.Models
     {
         public UserModel UserDetails { get; set; }
 
-        public string Message { get; set; }
+        //public string Message { get; set; }
+
+        public UserVarificationStatus Status { get; set; }
+    }
+
+    public enum UserVarificationStatus
+    {
+        None,
+        PasswordIncorrect,
+        UserUnregistered
     }
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="56252fc6ef284da7acf0dc8974fda58c" Name="Diagram1">
+        <EntityTypeShape EntityType="LibraryManagementModel.Author" Width="1.5" PointX="1.5" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibraryManagementModel.BookIssue" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibraryManagementModel.Book" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibraryManagementModel.Category" Width="1.5" PointX="1.5" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibraryManagementModel.ResetLink" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LibraryManagementModel.User" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <AssociationConnector Association="LibraryManagementModel.FK_Books_Authors" ManuallyRouted="false" />
+        <AssociationConnector Association="LibraryManagementModel.FK_BookIssues_Books" ManuallyRouted="false" />
+        <AssociationConnector Association="LibraryManagementModel.FK_BookIssues_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="LibraryManagementModel.FK_BookIssues_Users1" ManuallyRouted="false" />
+        <AssociationConnector Association="LibraryManagementModel.FK_Books_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="LibraryManagementModel.FK_ResetPasswordLinks_Users" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

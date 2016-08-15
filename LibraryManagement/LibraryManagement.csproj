@@ -194,6 +194,29 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\aspnet-LibraryManagement-20160614212353.mdf" />
+    <Content Include="App_Data\aspnet-LibraryManagement-20160614212353_log.ldf">
+      <DependentUpon>aspnet-LibraryManagement-20160614212353.mdf</DependentUpon>
+    </Content>
+    <Content Include="Content\LibraryTheme\css\ie7.css" />
+    <Content Include="Content\LibraryTheme\css\rokkitt-regular-webfont.svg" />
+    <Content Include="Content\LibraryTheme\css\style.css" />
+    <Content Include="Content\LibraryTheme\images\bg-body.jpg" />
+    <Content Include="Content\LibraryTheme\images\bg-footer.jpg" />
+    <Content Include="Content\LibraryTheme\images\bg-header.jpg" />
+    <Content Include="Content\LibraryTheme\images\bg-navigation.jpg" />
+    <Content Include="Content\LibraryTheme\images\button-more.jpg" />
+    <Content Include="Content\LibraryTheme\images\cosmetics.jpg" />
+    <Content Include="Content\LibraryTheme\images\fruits.jpg" />
+    <Content Include="Content\LibraryTheme\images\house.jpg" />
+    <Content Include="Content\LibraryTheme\images\icons.gif" />
+    <Content Include="Content\LibraryTheme\images\interface.jpg" />
+    <Content Include="Content\LibraryTheme\images\logo.gif" />
+    <Content Include="Content\LibraryTheme\images\pastries.jpg" />
+    <Content Include="Content\LibraryTheme\images\pastry1.jpg" />
+    <Content Include="Content\LibraryTheme\images\pastry2.jpg" />
+    <Content Include="Content\LibraryTheme\images\pastry3.jpg" />
+    <Content Include="Content\LibraryTheme\images\separator.jpg" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -250,6 +273,9 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Content\LibraryTheme\css\rokkitt-regular-webfont.eot" />
+    <Content Include="Content\LibraryTheme\css\rokkitt-regular-webfont.ttf" />
+    <Content Include="Content\LibraryTheme\css\rokkitt-regular-webfont.woff" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
@@ -274,19 +300,6 @@
     </Content>
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Images\accent.png" />
-    <Content Include="Images\bullet.png" />
-    <Content Include="Images\heroAccent.png" />
-    <Content Include="Images\orderedList0.png" />
-    <Content Include="Images\orderedList1.png" />
-    <Content Include="Images\orderedList2.png" />
-    <Content Include="Images\orderedList3.png" />
-    <Content Include="Images\orderedList4.png" />
-    <Content Include="Images\orderedList5.png" />
-    <Content Include="Images\orderedList6.png" />
-    <Content Include="Images\orderedList7.png" />
-    <Content Include="Images\orderedList8.png" />
-    <Content Include="Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -294,7 +307,6 @@
     <Content Include="Views\Account\_SetPasswordPartial.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Manage.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
@@ -304,10 +316,11 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPasswordEmail.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

@@ -22,8 +22,8 @@ namespace LibraryManagement.Repository.DatabaseEntities
         public Nullable<decimal> FineAmount { get; set; }
         public int IssuerID { get; set; }
     
+        public virtual Book Book { get; set; }
         public virtual User User { get; set; }
         public virtual User User1 { get; set; }
-        public virtual Book Book { get; set; }
     }
 }

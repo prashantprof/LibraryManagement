@@ -30,11 +30,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -53,71 +55,66 @@
     <Compile Include="Abstract\IAuthorRepository.cs" />
     <Compile Include="Abstract\IBookRepository.cs" />
     <Compile Include="Abstract\IUserRepository.cs" />
-    <Compile Include="Abstract\IUserRoleRepository.cs" />
     <Compile Include="Concrete\AuthorRepository.cs" />
     <Compile Include="Concrete\BookIssueRepository.cs" />
     <Compile Include="Concrete\BookRepository.cs" />
     <Compile Include="Concrete\CategoryRepository.cs" />
     <Compile Include="Concrete\UserRepository.cs" />
-    <Compile Include="Concrete\UserRoleRepository.cs" />
     <Compile Include="DatabaseEntities\Author.cs">
-      <DependentUpon>LibraryManagementData.tt</DependentUpon>
+      <DependentUpon>LibraryManagementDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DatabaseEntities\Book.cs">
-      <DependentUpon>LibraryManagementData.tt</DependentUpon>
+      <DependentUpon>LibraryManagementDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DatabaseEntities\BookIssue.cs">
-      <DependentUpon>LibraryManagementData.tt</DependentUpon>
+      <DependentUpon>LibraryManagementDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DatabaseEntities\Category.cs">
-      <DependentUpon>LibraryManagementData.tt</DependentUpon>
+      <DependentUpon>LibraryManagementDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DatabaseEntities\LibraryManagementData.Context.cs">
+    <Compile Include="DatabaseEntities\LibraryManagementDataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LibraryManagementData.Context.tt</DependentUpon>
+      <DependentUpon>LibraryManagementDataModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="DatabaseEntities\LibraryManagementData.cs">
+    <Compile Include="DatabaseEntities\LibraryManagementDataModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LibraryManagementData.tt</DependentUpon>
+      <DependentUpon>LibraryManagementDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DatabaseEntities\LibraryManagementData.Designer.cs">
+    <Compile Include="DatabaseEntities\LibraryManagementDataModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LibraryManagementData.edmx</DependentUpon>
+      <DependentUpon>LibraryManagementDataModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DatabaseEntities\ResetLink.cs">
+      <DependentUpon>LibraryManagementDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DatabaseEntities\User.cs">
-      <DependentUpon>LibraryManagementData.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DatabaseEntities\UserRole.cs">
-      <DependentUpon>LibraryManagementData.tt</DependentUpon>
+      <DependentUpon>LibraryManagementDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DatabaseEntities\LibraryManagementData.edmx.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="DatabaseEntities\LibraryManagementData.edmx">
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="DatabaseEntities\LibraryManagementDataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>LibraryManagementData.Designer.cs</LastGenOutput>
+      <LastGenOutput>LibraryManagementDataModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
-    <None Include="DatabaseEntities\LibraryManagementData.Context.tt">
+    <None Include="DatabaseEntities\LibraryManagementDataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LibraryManagementData.edmx</DependentUpon>
-      <LastGenOutput>LibraryManagementData.Context.cs</LastGenOutput>
+      <DependentUpon>LibraryManagementDataModel.edmx</DependentUpon>
+      <LastGenOutput>LibraryManagementDataModel.Context.cs</LastGenOutput>
     </None>
-    <None Include="DatabaseEntities\LibraryManagementData.edmx.diagram">
-      <DependentUpon>LibraryManagementData.edmx</DependentUpon>
+    <None Include="DatabaseEntities\LibraryManagementDataModel.edmx.diagram">
+      <DependentUpon>LibraryManagementDataModel.edmx</DependentUpon>
     </None>
-    <None Include="DatabaseEntities\LibraryManagementData.tt">
+    <None Include="DatabaseEntities\LibraryManagementDataModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>LibraryManagementData.edmx</DependentUpon>
-      <LastGenOutput>LibraryManagementData.cs</LastGenOutput>
+      <DependentUpon>LibraryManagementDataModel.edmx</DependentUpon>
+      <LastGenOutput>LibraryManagementDataModel.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

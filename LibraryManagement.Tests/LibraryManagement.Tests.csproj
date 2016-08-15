@@ -130,7 +130,6 @@
     <Compile Include="Services\BookTest.cs" />
     <Compile Include="Services\BookIssueTest.cs" />
     <Compile Include="Services\UserTest.cs" />
-    <Compile Include="Services\UserRoleTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
